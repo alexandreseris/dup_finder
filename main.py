@@ -3,7 +3,7 @@ import fnmatch
 import hashlib
 import os
 import sys
-from typing import Literal, get_args
+from typing import Generator, Literal, get_args
 
 Comparison = Literal["content", "name", "size"]
 DEFAULT_COMPARISON: tuple[Comparison, ...] = ("name", "size")
@@ -28,7 +28,7 @@ def find_dups(
     comparison_type: tuple[Comparison, ...] = DEFAULT_COMPARISON,
     file_patterns: list[str] | None = None,
     exclude_file_patterns: list[str] | None = None,
-) -> None:
+) -> Generator[list[str], None, None]:
     for folder in folders:
         if not os.path.isdir(folder):
             raise ValueError(f"folder {folder} does not exists")
@@ -57,14 +57,10 @@ def find_dups(
                     files_map[hash_].append(file_path_abs)
                 except KeyError:
                     files_map[hash_] = [file_path_abs]
-    dup_cnt = 0
+
     for files in files_map.values():
         if len(files) > 1:
-            dup_cnt += 1
-            print(f"duplicate {dup_cnt}:")
-            for file in files:
-                print("    ", file, sep="")
-    print(f"found {dup_cnt} duplicates")
+            yield files
 
 
 if __name__ == "__main__":
@@ -107,12 +103,18 @@ if __name__ == "__main__":
     )
     args = parser.parse_args()
     try:
-        find_dups(
+        dups = find_dups(
             folders=args.folders,
             comparison_type=tuple(args.comparison),
             file_patterns=args.patterns,
             exclude_file_patterns=args.exclude,
         )
+        dup_cnt = 0
+        for dup_cnt, files in enumerate(dups, start=1):
+            print(f"duplicate {dup_cnt}:")
+            for file in files:
+                print("    ", file, sep="")
+        print(f"found {dup_cnt} duplicates")
     except Exception as exp:
         print("program encountered an error:", exp, file=sys.stderr)
         raise SystemExit(1)
