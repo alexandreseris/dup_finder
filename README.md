@@ -11,7 +11,7 @@ tested with python 3.10, no dependencies, you can use it as is :)
 ```sh
 usage: dup_finder [-h] [-c [{content,name,size} ...]] [-p [PATTERNS ...]] [-x [EXCLUDE ...]] folders [folders ...]
 
-program to find and remove file duplicates in a directory
+program to find file duplicates in a directory
 
 positional arguments:
   folders               folder used to search
