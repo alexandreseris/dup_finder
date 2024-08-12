@@ -67,7 +67,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(
         "dup_finder",
         description="program to find and remove file duplicates in a directory",
-        epilog="usage example: python3 dup_finder -c content -p '*.csv' '*.json' -i -- folder1 folder2",
+        epilog="usage example: python3 dup_finder/main.py -c content -p '*.csv' '*.json' -i -- folder1 folder2",
     )
     parser.add_argument(
         "folders",

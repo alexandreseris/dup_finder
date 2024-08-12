@@ -9,7 +9,7 @@ tested with python 3.10, no dependencies, you can use it as is :)
 ## Usage from command line
 
 ```sh
-usage: dup_finder [-h] [-c [{content,name,size} ...]] [-p [PATTERNS ...]] [-x [EXCLUDE ...]] [-i] folders [folders ...]
+usage: dup_finder [-h] [-c [{content,name,size} ...]] [-p [PATTERNS ...]] [-x [EXCLUDE ...]] folders [folders ...]
 
 program to find and remove file duplicates in a directory
 
@@ -24,8 +24,6 @@ options:
                         file pattern used to restrict search
   -x [EXCLUDE ...], --exclude-file-pattern [EXCLUDE ...]
                         file pattern used to exclude from search
-  -i, --interactive-remove
-                        interactively ask for which file to remove instead of just printing the paths
 
-usage example: python3 dup_finder -c content -p '*.csv' '*.json' -i -- folder1 folder2
+usage example: python3 dup_finder/main.py -c content -p '*.csv' '*.json' -i -- folder1 folder2
 ```
